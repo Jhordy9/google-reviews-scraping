@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Franchise {
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  deletedAt     DateTime? @map("deleted_at")
+  //
+  name          String?
+  rating        Json?
+  totalReviews  Int?      @map("total_reviews")
+  averageRating Float?    @map("average_rating")
+  url           String    @unique
+  lastFetchedAt DateTime? @map("last_fetched_at")
+  lastCursor    String?   @map("last_cursor")
+  //
+  reviews       Review[]
+
+  //
+  @@map("franchises")
+}
+
+model Review {
+  id            Int        @id @default(autoincrement())
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @updatedAt @map("updated_at")
+  deletedAt     DateTime?  @map("deleted_at")
+  //
+  userName      String?    @map("user_name")
+  userAvatarUrl String?    @map("user_avatar_url")
+  rating        Int?
+  date          DateTime?
+  comment       String?
+  images        String[]
+  //
+  franchise     Franchise? @relation(fields: [franchiseId], references: [id])
+  franchiseId   Int?       @map("franchise_id")
+
+  //
+  @@map("reviews")
+}
