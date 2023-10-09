@@ -1,6 +1,8 @@
 import { launchBrowser } from './utils/puppeteerSetup';
 import { getAllReviewsFromPage, getPlaceData } from './utils/dataExtraction';
 import { FetchReviewsOptions, ReviewsType } from './types';
+import { RatingSchema, ReviewsSchemaResponse } from './types/schema';
+import { ZodError } from 'zod';
 
 /**
  * Fetches reviews from a specified local place on Google Maps.
@@ -38,13 +40,28 @@ export const getLocalPlaceReviews = async (
   await new Promise((r) => setTimeout(r, 5000));
   await page.waitForSelector('.fontBodyMedium');
 
-  const { lastCursor, reviews } = await getAllReviewsFromPage(
-    page,
-    options?.lastCursor
-  );
-  await browser.close();
+  try {
+    const { lastCursor, reviews } = await getAllReviewsFromPage(
+      page,
+      options?.lastCursor
+    );
 
-  return { reviews, lastCursor: lastCursor! };
+    const parsedReviews = ReviewsSchemaResponse.parse({ lastCursor, reviews });
+
+    await browser.close();
+
+    return parsedReviews;
+  } catch (err) {
+    await browser.close();
+
+    if (err instanceof ZodError) {
+      console.error(err.issues);
+      throw new Error(
+        `Error while trying to parse reviews, maybe the scraper is broken, err: ${err.message}`
+      );
+    }
+    throw err;
+  }
 };
 
 /**
@@ -69,8 +86,23 @@ export const getLocalPlaceInfo = async (
   await page.goto(placeUrl);
   await new Promise((r) => setTimeout(r, 2000));
 
-  const data = await getPlaceData(page);
-  await browser.close();
+  try {
+    const data = await getPlaceData(page);
 
-  return data;
+    const parsedData = RatingSchema.parse(data);
+
+    await browser.close();
+
+    return parsedData;
+  } catch (err) {
+    await browser.close();
+    if (err instanceof ZodError) {
+      console.error(err.issues);
+      throw new Error(
+        `Error while trying to parse place info, maybe the scraper is broken, err: ${err.message}`
+      );
+    }
+
+    throw err;
+  }
 };

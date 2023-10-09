@@ -1,8 +1,6 @@
 import { Page } from 'puppeteer';
 import { scrollFullPage, scrollPage } from './scrollUtils';
-import { PromiseDataType } from '../types';
-import { TransformedObjectRatingType } from '../types';
-import { ReviewsSchemaResponse, RatingSchema } from '../types/schema';
+import { PromiseDataType, TransformedObjectRatingType } from '../types';
 
 export type Reviews = PromiseDataType<typeof getReviewsFromPage>['reviews'];
 
@@ -65,13 +63,6 @@ export const getReviewsFromPage = async (
   };
 };
 
-const parseAndReturnReviews = (response: {
-  reviews: Reviews;
-  lastCursor?: string | null;
-}) => {
-  return ReviewsSchemaResponse.parse(response);
-};
-
 export const getAllReviewsFromPage = async (
   page: Page,
   oldBeforeCursor?: string | null
@@ -89,10 +80,7 @@ export const getAllReviewsFromPage = async (
       currentCursor
     );
 
-    parseAndReturnReviews({
-      reviews: allReviews,
-      lastCursor: afterCursor,
-    });
+    return { reviews: allReviews, lastCursor: afterCursor };
   }
 
   do {
@@ -112,10 +100,7 @@ export const getAllReviewsFromPage = async (
     }
   } while (currentCursor);
 
-  parseAndReturnReviews({
-    reviews: accAllReviews,
-    lastCursor: newBeforeCursor,
-  });
+  return { reviews: accAllReviews, lastCursor: newBeforeCursor };
 };
 
 export const getPlaceData = async (page: Page) => {
@@ -144,7 +129,7 @@ export const getPlaceData = async (page: Page) => {
       {}
     );
 
-    const data = {
+    return {
       placeName: mainContainer?.getAttribute('aria-label'),
       rating: transformRatingData,
       averageRating: parseFloat(
@@ -159,10 +144,6 @@ export const getPlaceData = async (page: Page) => {
         10
       ),
     };
-
-    const parseData = RatingSchema.parse(data);
-
-    return parseData;
   });
 
   return placeData;

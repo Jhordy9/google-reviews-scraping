@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx main.ts",
+    "lambda:reviews": "serverless invoke local --function reviewPlaces",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev"
   },
