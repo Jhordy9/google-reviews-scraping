@@ -61,11 +61,10 @@ Prisma is used for database access. The Prisma schema is defined in `prisma/sche
 
 ## Dependencies
 
-- **Prisma**: For database access.
-- **Puppeteer** and **Puppeteer Extra**: For web scraping.
-- **AWS Lambda**: For serverless function execution.
-- **date-fns**: For date manipulation.
-- **Zod**: For data validation and parsing.
+- **[Prisma](https://www.prisma.io/docs/)**: For database access.
+- **[Puppeteer](https://pptr.dev/)** and **[Puppeteer Extra](https://github.com/berstend/puppeteer-extra)**: For web scraping.
+- **[AWS Lambda](https://aws.amazon.com/lambda/)**: For serverless function execution.
+- **[Zod](https://github.com/colinhacks/zod)**: For data validation and parsing.
 
 For a complete list of dependencies, refer to the `package.json` file.
 
