@@ -65,6 +65,13 @@ export const getReviewsFromPage = async (
   };
 };
 
+const parseAndReturnReviews = (response: {
+  reviews: Reviews;
+  lastCursor?: string | null;
+}) => {
+  return ReviewsSchemaResponse.parse(response);
+};
+
 export const getAllReviewsFromPage = async (
   page: Page,
   oldBeforeCursor?: string | null
@@ -82,12 +89,10 @@ export const getAllReviewsFromPage = async (
       currentCursor
     );
 
-    const parseAllReviews = ReviewsSchemaResponse.parse({
+    parseAndReturnReviews({
       reviews: allReviews,
       lastCursor: afterCursor,
     });
-
-    return parseAllReviews;
   }
 
   do {
@@ -107,12 +112,10 @@ export const getAllReviewsFromPage = async (
     }
   } while (currentCursor);
 
-  const parseAllReviews = ReviewsSchemaResponse.parse({
+  parseAndReturnReviews({
     reviews: accAllReviews,
     lastCursor: newBeforeCursor,
   });
-
-  return parseAllReviews;
 };
 
 export const getPlaceData = async (page: Page) => {
