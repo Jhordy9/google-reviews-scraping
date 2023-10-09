@@ -6,7 +6,7 @@ This project is developed to scrape reviews and details of local places from Goo
 
 1. **Node.js 14.x+**: Ensure that Node.js version 14.x+ is installed. You can download it from [here](https://nodejs.org/).
 
-2. **Serverless Framework**: Install the Serverless Framework using the following command:
+2. **[Serverless Framework](https://www.serverless.com/framework/docs/)**: Install the Serverless Framework using the following command:
     ```bash
     npm install -g serverless
     ```
