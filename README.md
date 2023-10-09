@@ -1,4 +1,4 @@
-# ARCCA App 01
+# Google Reviews Scraping
 
 This project is developed to scrape reviews and details of local places from Google Maps using Puppeteer. It employs AWS Lambda functions to execute the scraping jobs.
 
