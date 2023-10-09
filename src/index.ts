@@ -1,6 +1,6 @@
 import { launchBrowser } from './utils/puppeteerSetup';
 import { getAllReviewsFromPage, getPlaceData } from './utils/dataExtraction';
-import { FetchReviewsOptions, ReviewData } from './types';
+import { FetchReviewsOptions, ReviewsType } from './types';
 
 /**
  * Fetches reviews from a specified local place on Google Maps.
@@ -18,7 +18,7 @@ import { FetchReviewsOptions, ReviewData } from './types';
 export const getLocalPlaceReviews = async (
   placeUrl: string,
   options?: FetchReviewsOptions & { lastCursor?: string | null }
-): Promise<ReviewData> => {
+): Promise<ReviewsType> => {
   const browser = await launchBrowser();
 
   const page = await browser.newPage();
@@ -44,7 +44,7 @@ export const getLocalPlaceReviews = async (
   );
   await browser.close();
 
-  return { reviews, count: reviews.length, lastCursor: lastCursor! };
+  return { reviews, lastCursor: lastCursor! };
 };
 
 /**

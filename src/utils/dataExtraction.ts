@@ -1,7 +1,8 @@
 import { Page } from 'puppeteer';
 import { scrollFullPage, scrollPage } from './scrollUtils';
 import { PromiseDataType } from '../types';
-import { convertStringToDate } from './convertStringToDate';
+import { TransformedObjectRatingType } from '../types';
+import { ReviewsSchemaResponse, RatingSchema } from '../types/schema';
 
 export type Reviews = PromiseDataType<typeof getReviewsFromPage>['reviews'];
 
@@ -81,7 +82,12 @@ export const getAllReviewsFromPage = async (
       currentCursor
     );
 
-    return { reviews: allReviews, lastCursor: afterCursor };
+    const parseAllReviews = ReviewsSchemaResponse.parse({
+      reviews: allReviews,
+      lastCursor: afterCursor,
+    });
+
+    return parseAllReviews;
   }
 
   do {
@@ -101,10 +107,13 @@ export const getAllReviewsFromPage = async (
     }
   } while (currentCursor);
 
-  return { reviews: accAllReviews, lastCursor: newBeforeCursor };
-};
+  const parseAllReviews = ReviewsSchemaResponse.parse({
+    reviews: accAllReviews,
+    lastCursor: newBeforeCursor,
+  });
 
-type TransformedObjectRating = { [key: string]: number };
+  return parseAllReviews;
+};
 
 export const getPlaceData = async (page: Page) => {
   const placeData = await page.evaluate(() => {
@@ -121,7 +130,7 @@ export const getPlaceData = async (page: Page) => {
       .filter((r): r is string => r !== null);
 
     const transformRatingData = rating.reduce(
-      (acc: TransformedObjectRating, item: string | null) => {
+      (acc: TransformedObjectRatingType, item: string | null) => {
         if (!item) return acc;
         let [starsStr, reviewsStr] = item.split(',');
         const stars = parseInt(starsStr.split(' ')[0]);
@@ -132,7 +141,7 @@ export const getPlaceData = async (page: Page) => {
       {}
     );
 
-    return {
+    const data = {
       placeName: mainContainer?.getAttribute('aria-label'),
       rating: transformRatingData,
       averageRating: parseFloat(
@@ -147,6 +156,10 @@ export const getPlaceData = async (page: Page) => {
         10
       ),
     };
+
+    const parseData = RatingSchema.parse(data);
+
+    return parseData;
   });
 
   return placeData;
