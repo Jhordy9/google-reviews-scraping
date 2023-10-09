@@ -12,7 +12,7 @@ datasource db {
 }
 
 model Franchise {
-  id            Int       @id @default(autoincrement())
+  id            String    @id @default(uuid())
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
   deletedAt     DateTime? @map("deleted_at")
@@ -32,7 +32,7 @@ model Franchise {
 }
 
 model Review {
-  id            Int        @id @default(autoincrement())
+  id            String     @id @default(uuid())
   createdAt     DateTime   @default(now()) @map("created_at")
   updatedAt     DateTime   @updatedAt @map("updated_at")
   deletedAt     DateTime?  @map("deleted_at")
@@ -43,9 +43,10 @@ model Review {
   date          DateTime?
   comment       String?
   images        String[]
+  reviewId      String     @unique
   //
   franchise     Franchise? @relation(fields: [franchiseId], references: [id])
-  franchiseId   Int?       @map("franchise_id")
+  franchiseId   String?
 
   //
   @@map("reviews")
