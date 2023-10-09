@@ -7,8 +7,8 @@ import { convertStringToDate } from './src/utils/convertStringToDate';
 const lessThirtyMinutesAgo = subMinutes(new Date(), 30);
 
 export const reviewPlaces: Handler = async () => {
-  // const franchisesCount = await db.franchise.count();
-  // const franchisesPercentage = Math.ceil(franchisesCount * 0.07);
+  const franchisesCount = await db.franchise.count();
+  const franchisesPercentage = Math.ceil(franchisesCount * 0.07);
 
   const franchisesToUpdate = await db.franchise.findMany({
     select: {
@@ -29,7 +29,7 @@ export const reviewPlaces: Handler = async () => {
         },
       ],
     },
-    // take: franchisesPercentage,
+    take: franchisesPercentage,
   });
 
   let countUpdatedFranchises = 0;
@@ -61,6 +61,7 @@ export const reviewPlaces: Handler = async () => {
         name: placeInfo.placeName,
         rating: placeInfo.rating,
         lastFetchedAt: new Date(),
+        lastCursor: getReviews.lastCursor,
         reviews: {
           createMany: {
             data: getReviews.reviews.map((r) => ({
