@@ -26,6 +26,18 @@ export const getLocalPlaceReviews = async (
   await page.goto(placeUrl);
   await new Promise((r) => setTimeout(r, 2000));
 
+  const orderSelector = "button[aria-label='Classificar avaliações']";
+  const orderButtonSelector = "div[role='menuitemradio'][data-index='1']";
+
+  await page.waitForSelector(orderSelector);
+  await page.click(orderSelector);
+
+  await page.waitForSelector(orderButtonSelector);
+  await page.click(orderButtonSelector);
+
+  await new Promise((r) => setTimeout(r, 5000));
+  await page.waitForSelector('.fontBodyMedium');
+
   const { lastCursor, reviews } = await getAllReviewsFromPage(
     page,
     options?.lastCursor

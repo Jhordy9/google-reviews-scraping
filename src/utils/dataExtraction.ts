@@ -85,14 +85,14 @@ export const getAllReviewsFromPage = async (
   }
 
   do {
+    await scrollPage(page);
+
     const { reviews, afterCursor, beforeCursor } = await getReviewsFromPage(
       page,
       currentCursor
     );
 
     accAllReviews.push(...reviews);
-
-    await scrollPage(page);
 
     currentCursor = afterCursor as string | undefined;
 

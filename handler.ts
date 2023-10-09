@@ -68,6 +68,7 @@ export const reviewPlaces: Handler = async () => {
               comment: r.comment,
               date: r.date && convertStringToDate(r.date),
               images: r.images,
+              reviewId: r?.reviewId ?? '',
               rating: r.rating,
               userAvatarUrl: r.userAvatarUrl,
               userName: r.userName,
