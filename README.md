@@ -65,7 +65,7 @@ Prisma is used for database access. The Prisma schema is defined in `prisma/sche
 - **[Puppeteer](https://pptr.dev/)** and **[Puppeteer Extra](https://github.com/berstend/puppeteer-extra)**: For web scraping.
 - **[AWS Lambda](https://aws.amazon.com/lambda/)**: For serverless function execution.
 - **[Zod](https://github.com/colinhacks/zod)**: For data validation and parsing.
-- **Serverless Framework**: [Documentation](https://www.serverless.com/framework/docs/): An open-source framework for developing and deploying serverless functions to any cloud.
+- **[Serverless Framework](https://www.serverless.com/framework/docs/)**: An open-source framework for developing and deploying serverless functions to any cloud.
 
 For a complete list of dependencies, refer to the `package.json` file.
 
