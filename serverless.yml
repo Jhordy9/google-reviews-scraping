@@ -8,6 +8,8 @@ provider:
 functions:
   reviewPlaces:
     handler: handler.reviewPlaces
+    events:
+      - schedule: rate(30 minutes)
 
 plugins:
   - serverless-plugin-typescript
