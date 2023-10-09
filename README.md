@@ -49,7 +49,7 @@ This project is developed to scrape reviews and details of local places from Goo
 
 ## Lambda Function
 
-The main Lambda function `reviewPlaces` is defined in `handler.js`. This function:
+The main Lambda function `reviewPlaces` is defined in `handler.ts`. This function:
 - Retrieves a subset of franchises from the database.
 - Checks if the total number of reviews has changed since the last fetch.
 - If there are new reviews, it triggers the `getLocalPlaceReviews` function to scrape the latest reviews.
