@@ -29,7 +29,7 @@ export const reviewPlaces: Handler = async () => {
         },
       ],
     },
-    take: franchisesPercentage,
+    // take: franchisesPercentage,
   });
 
   let countUpdatedFranchises = 0;
@@ -44,7 +44,7 @@ export const reviewPlaces: Handler = async () => {
           lastFetchedAt: new Date(),
         },
       });
-      break;
+      continue;
     }
 
     const getReviews = await getLocalPlaceReviews(franchise.url, {
@@ -66,7 +66,7 @@ export const reviewPlaces: Handler = async () => {
           createMany: {
             data: getReviews.reviews.map((r) => ({
               comment: r.comment,
-              date: r.date && convertStringToDate(r.date),
+              date: convertStringToDate(r.date),
               images: r.images,
               reviewId: r?.reviewId ?? '',
               rating: r.rating,

@@ -16,22 +16,15 @@ const pluralToSingular: Record<string, Unit> = {
   anos: 'ano',
 };
 
-export const convertStringToDate = (str: string): Date | null => {
+export const convertStringToDate = (str: string): Date => {
   const today = new Date();
 
   const parts = str.replace(/\buma?\b/g, '1').split(' ');
-  if (parts.length !== 3 || parts[2] !== 'atrás') {
-    throw new Error('String formatting is invalid');
-  }
 
   const value = parseInt(parts[0], 10);
   const unit = units[parts[1] as Unit]
     ? (parts[1] as Unit)
     : pluralToSingular[parts[1]];
-
-  if (isNaN(value) || !units[unit]) {
-    throw new Error('Value or unit is invalid');
-  }
 
   return units[unit](today, value);
 };

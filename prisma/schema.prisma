@@ -35,18 +35,17 @@ model Review {
   id            String     @id @default(uuid())
   createdAt     DateTime   @default(now()) @map("created_at")
   updatedAt     DateTime   @updatedAt @map("updated_at")
-  deletedAt     DateTime?  @map("deleted_at")
   //
-  userName      String?    @map("user_name")
+  userName      String     @map("user_name")
   userAvatarUrl String?    @map("user_avatar_url")
-  rating        Int?
-  date          DateTime?
+  rating        Int
+  date          DateTime
   comment       String?
   images        String[]
-  reviewId      String     @unique
+  reviewId      String     @unique @map("review_id")
   //
   franchise     Franchise? @relation(fields: [franchiseId], references: [id])
-  franchiseId   String?
+  franchiseId   String     @map("franchise_id")
 
   //
   @@map("reviews")
