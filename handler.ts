@@ -29,7 +29,7 @@ export const reviewPlaces: Handler = async () => {
         },
       ],
     },
-    // take: franchisesPercentage,
+    take: franchisesPercentage,
   });
 
   let countUpdatedFranchises = 0;
