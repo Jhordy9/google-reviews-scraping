@@ -98,5 +98,6 @@ This project is licensed under the MIT License.
 
 If you find this project helpful, consider buying me a coffee:
 
-[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://www.buymeacoffee.com/jhordy)
-
+<a href="https://www.buymeacoffee.com/jhordy">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="150">
+</a>
