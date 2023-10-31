@@ -1,8 +1,9 @@
 {
-  "name": "google-reviews-scraping",
+  "name": "@jhordy/google-reviews-scraping",
   "version": "1.0.0",
   "description": "A nodejs tool for scraping Google Reviews using Puppeteer.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "src/types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
