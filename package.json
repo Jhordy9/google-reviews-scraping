@@ -1,5 +1,5 @@
 {
-  "name": "@jhordy/google-reviews-scraping",
+  "name": "google-reviews-scraping",
   "version": "1.0.0",
   "description": "A nodejs tool for scraping Google Reviews using Puppeteer.",
   "main": "dist/index.js",
