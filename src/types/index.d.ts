@@ -1,4 +1,4 @@
-import { FetchReviewsOptions } from './types';
+import { FetchReviewsOptions } from './common';
 
 export type LocalPlaceInfoParams = {
   placeUrl: string;
