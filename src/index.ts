@@ -6,7 +6,7 @@ import {
 import { LocalPlaceInfoParams, LocalPlaceReviewsParams } from './types';
 import { RatingSchema, ReviewsSchemaResponse } from './types/schema';
 import { ZodError } from 'zod';
-import { ReviewsType, LocalPlaceInfoType } from './types/types';
+import { ReviewsType, LocalPlaceInfoType } from './types/common';
 
 /**
  * Fetches reviews from a specified local place on Google Maps.

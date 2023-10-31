@@ -1,6 +1,6 @@
 import { Page } from 'puppeteer';
 import { scrollFullPage, scrollPage } from './scrollUtils';
-import { PromiseDataType, TransformedObjectRatingType } from '../types';
+import { PromiseDataType, TransformedObjectRatingType } from '../types/common';
 
 export type Reviews = PromiseDataType<typeof getReviewsFromPage>['reviews'];
 
