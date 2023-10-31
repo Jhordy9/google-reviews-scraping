@@ -3,14 +3,10 @@ import {
   getAllReviewsFromPage,
   getPlaceData,
 } from './puppeteer/dataExtraction';
-import {
-  LocalPlaceInfoParams,
-  LocalPlaceInfoType,
-  LocalPlaceReviewsParams,
-  ReviewsType,
-} from './types';
+import { LocalPlaceInfoParams, LocalPlaceReviewsParams } from './types';
 import { RatingSchema, ReviewsSchemaResponse } from './types/schema';
 import { ZodError } from 'zod';
+import { ReviewsType, LocalPlaceInfoType } from './types/types';
 
 /**
  * Fetches reviews from a specified local place on Google Maps.
