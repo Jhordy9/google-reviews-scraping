@@ -4,7 +4,7 @@ Fetch reviews and information about local places from Google Maps using Puppetee
 ## Installation
 
 ```bash
-npm install [YOUR-PACKAGE-NAME]
+npm install google-reviews-scraping
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ This package provides two main functions:
 ### Fetching Reviews from a Local Place
 
 ```typescript
-import { getLocalPlaceReviews } from '[YOUR-PACKAGE-NAME]';
+import { getLocalPlaceReviews } from 'google-reviews-scraping';
 
 const reviewsData = await getLocalPlaceReviews({
   placeUrl: 'https://www.google.com.br/maps/place/Starbucks/[...]',
@@ -33,7 +33,7 @@ console.log(reviewsData);
 ### Fetching Information About a Local Place
 
 ```typescript
-import { getLocalPlaceInfo } from '[YOUR-PACKAGE-NAME]';
+import { getLocalPlaceInfo } from 'google-reviews-scraping';
 
 const placeInfo = await getLocalPlaceInfo({
   placeUrl: 'https://www.google.com.br/maps/place/Starbucks/[...]',
