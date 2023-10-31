@@ -93,3 +93,10 @@ An object containing the local place information.
 ## License
 
 This project is licensed under the MIT License.
+
+## Support
+
+If you find this project helpful, consider buying me a coffee:
+
+[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://www.buymeacoffee.com/jhordy)
+
