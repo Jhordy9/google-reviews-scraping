@@ -1,4 +1,5 @@
 import { FetchReviewsOptions } from './common';
+import { getLocalPlaceInfo, getLocalPlaceReviews } from '../index';
 
 export type LocalPlaceInfoParams = {
   placeUrl: string;
@@ -9,3 +10,5 @@ export type LocalPlaceReviewsParams = {
   placeUrl: string;
   options?: FetchReviewsOptions & { lastCursor?: string | null };
 };
+
+export { getLocalPlaceInfo, getLocalPlaceReviews };
