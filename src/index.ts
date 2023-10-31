@@ -1,6 +1,14 @@
-import { launchBrowser } from './utils/puppeteerSetup';
-import { getAllReviewsFromPage, getPlaceData } from './utils/dataExtraction';
-import { FetchReviewsOptions, ReviewsType } from './types';
+import { launchBrowser } from './puppeteer/puppeteerSetup';
+import {
+  getAllReviewsFromPage,
+  getPlaceData,
+} from './puppeteer/dataExtraction';
+import {
+  LocalPlaceInfoParams,
+  LocalPlaceInfoType,
+  LocalPlaceReviewsParams,
+  ReviewsType,
+} from './types';
 import { RatingSchema, ReviewsSchemaResponse } from './types/schema';
 import { ZodError } from 'zod';
 
@@ -17,10 +25,10 @@ import { ZodError } from 'zod';
  * @example
  * const reviewsData = await getLocalPlaceReviews('https://www.google.com.br/maps/place/Starbucks/@-26.9198174,-49.0715915,17z/data=!4m8!3m7!1s0x94df1907d7f5662f:0xf797f04b7b7520c5!8m2!3d-26.9198222!4d-49.0690166!9m1!1b1!16s%2Fg%2F11k3mqtmjl?entry=ttu');
  */
-export const getLocalPlaceReviews = async (
-  placeUrl: string,
-  options?: FetchReviewsOptions & { lastCursor?: string | null }
-): Promise<ReviewsType> => {
+export const getLocalPlaceReviews = async ({
+  placeUrl,
+  options,
+}: LocalPlaceReviewsParams): Promise<ReviewsType> => {
   const browser = await launchBrowser();
 
   const page = await browser.newPage();
@@ -75,10 +83,10 @@ export const getLocalPlaceReviews = async (
  * @example
  * const placeInfo = await getLocalPlaceInfo('https://www.google.com.br/maps/place/Starbucks/@-26.9198174,-49.0715915,17z/data=!4m8!3m7!1s0x94df1907d7f5662f:0xf797f04b7b7520c5!8m2!3d-26.9198222!4d-49.0690166!9m1!1b1!16s%2Fg%2F11k3mqtmjl?entry=ttu');
  */
-export const getLocalPlaceInfo = async (
-  placeUrl: string,
-  options?: FetchReviewsOptions
-) => {
+export const getLocalPlaceInfo = async ({
+  placeUrl,
+  options,
+}: LocalPlaceInfoParams): Promise<LocalPlaceInfoType> => {
   const browser = await launchBrowser();
 
   const page = await browser.newPage();

@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { Reviews } from '../utils/dataExtraction';
 import {
   RatingSchema,
   ReviewsSchemaResponse,
@@ -18,3 +17,15 @@ export type RatingType = z.infer<typeof RatingSchema>;
 export type TransformedObjectRatingType = z.infer<
   typeof TransformedObjectRating
 >;
+
+export type LocalPlaceInfoType = z.infer<typeof RatingSchema>;
+
+export type LocalPlaceInfoParams = {
+  placeUrl: string;
+  options?: FetchReviewsOptions;
+};
+
+export type LocalPlaceReviewsParams = {
+  placeUrl: string;
+  options?: FetchReviewsOptions & { lastCursor?: string | null };
+};

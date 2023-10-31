@@ -1,71 +1,95 @@
-# Google Reviews Scraping
+# Google Reviews Scraper
+Fetch reviews and information about local places from Google Maps using Puppeteer.
 
-This project is developed to scrape reviews and details of local places from Google Maps using Puppeteer. It employs AWS Lambda functions to execute the scraping jobs.
+## Installation
 
-## Setup
+```bash
+npm install [YOUR-PACKAGE-NAME]
+```
 
-1. **Node.js 14.x+**: Ensure that Node.js version 14.x+ is installed. You can download it from [here](https://nodejs.org/).
+## Usage
 
-2. **Serverless Framework**: Install the Serverless Framework using the following command:
-    ```bash
-    npm install -g serverless
-    ```
+This package provides two main functions:
 
-3. **Docker and Docker-Compose**:
-    - Install Docker from [here](https://www.docker.com/get-started).
-    - Install Docker-Compose from [here](https://docs.docker.com/compose/install/).
+- `getLocalPlaceReviews`: Fetches reviews from a specified local place on Google Maps.
+- `getLocalPlaceInfo`: Retrieves information about a local place based on the provided URL.
 
-4. **Yarn**: Run the following command to install project dependencies:
-    ```bash
-    yarn
-    ```
+### Fetching Reviews from a Local Place
 
-5. **Docker-Compose**: Execute the following command to set up your Docker containers:
-    ```bash
-    docker-compose up -d
-    ```
+```typescript
+import { getLocalPlaceReviews } from '[YOUR-PACKAGE-NAME]';
 
-6. **Prisma**: Generate Prisma client and migrate your database schema with the following commands:
-    ```bash
-    yarn db:generate
-    yarn db:migrate
-    ```
+const reviewsData = await getLocalPlaceReviews({
+  placeUrl: 'https://www.google.com.br/maps/place/Starbucks/[...]',
+  options: {
+    navigationTimeout: 7000, // Optional
+    lastCursor: '[CURSOR]', // Optional
+  },
+});
 
-## Running the Project
+console.log(reviewsData);
+```
 
-1. **Lambda Function**: To invoke the Lambda function locally, use the following command:
-    ```bash
-    yarn lambda:reviews
-    ```
+### Fetching Information About a Local Place
 
-## Project Structure
+```typescript
+import { getLocalPlaceInfo } from '[YOUR-PACKAGE-NAME]';
 
-- `src/`: Contains the source files for the AWS Lambda function and utility functions for Puppeteer.
-- `handler.ts`: The entry point for the AWS Lambda function that triggers the review scraping process.
-- `docker-compose.yml`: Configuration file for Docker-Compose to set up the necessary Docker containers for the project.
-- `prisma/`: Contains the Prisma schema and migration files.
-- `package.json`: Defines the project dependencies and scripts.
-- `serverless.yml`: Configuration file for the Serverless Framework.
+const placeInfo = await getLocalPlaceInfo({
+  placeUrl: 'https://www.google.com.br/maps/place/Starbucks/[...]',
+  options: {
+    navigationTimeout: 7000, // Optional
+  },
+});
 
-## Lambda Function
+console.log(placeInfo);
+```
 
-The main Lambda function `reviewPlaces` is defined in `handler.ts`. This function:
-- Retrieves a subset of franchises from the database.
-- Checks if the total number of reviews has changed since the last fetch.
-- If there are new reviews, it triggers the `getLocalPlaceReviews` function to scrape the latest reviews.
-- Updates the database with the new reviews and other place details.
+## API
 
-## Prisma
+### getLocalPlaceReviews
 
-Prisma is used for database access. The Prisma schema is defined in `prisma/schema.prisma`.
+**Parameters**
+- `placeUrl`: The URL of the reviews page for the local place on Google Maps.
+- `options`:
+  - `navigationTimeout` (optional): The maximum time to wait for navigation, in milliseconds. Default is 6000.
+  - `lastCursor` (optional): A string representing the cursor position for paginated reviews fetching.
 
-## Dependencies
+**Returns**
+An object containing the reviews, the count of reviews, and a cursor to the last review.
+```typescript
+{
+    reviews: {
+        date: string;
+        userName: string;
+        userAvatarUrl: string | null;
+        rating: number;
+        images: string[];
+        reviewId: string;
+        comment?: string | undefined;
+    }[];
+    lastCursor?: string | undefined;
+}
+```
 
-- **[Prisma](https://www.prisma.io/docs/)**: For database access.
-- **[Puppeteer](https://pptr.dev/)** and **[Puppeteer Extra](https://github.com/berstend/puppeteer-extra)**: For web scraping.
-- **[AWS Lambda](https://aws.amazon.com/lambda/)**: For serverless function execution.
-- **[Zod](https://github.com/colinhacks/zod)**: For data validation and parsing.
-- **[Serverless Framework](https://www.serverless.com/framework/docs/)**: An open-source framework for developing and deploying serverless functions to any cloud.
+### getLocalPlaceInfo
 
-For a complete list of dependencies, refer to the `package.json` file.
+**Parameters**
+- `placeUrl`: The URL of the local place on Google Maps.
+- `options`:
+  - `navigationTimeout` (optional): The maximum time to wait for navigation, in milliseconds. Default is 6000.
 
+**Returns**
+An object containing the local place information.
+```typescript
+{
+    rating: Record<string, number>;
+    placeName: string;
+    averageRating: number;
+    totalReviews: number;
+}
+```
+
+## License
+
+This project is licensed under the MIT License.
