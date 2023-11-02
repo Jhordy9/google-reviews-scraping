@@ -44,6 +44,20 @@ export const getLocalPlaceReviews = async ({
   await new Promise((r) => setTimeout(r, 5000));
   await page.waitForSelector('.fontBodyMedium');
 
+  await page.waitForSelector('[role="tablist"]');
+
+  await page.$eval('[role="tablist"]', (tablist) => {
+    if (tablist.children.length > 0) {
+      const firstChild = tablist.children[1];
+      const clickEvent = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+      });
+      firstChild.dispatchEvent(clickEvent);
+    }
+  });
+
   try {
     const { lastCursor, reviews } = await getAllReviewsFromPage(
       page,
@@ -89,6 +103,20 @@ export const getLocalPlaceInfo = async ({
   page.setDefaultNavigationTimeout(options?.navigationTimeout ?? 6000);
   await page.goto(placeUrl);
   await new Promise((r) => setTimeout(r, 2000));
+
+  await page.waitForSelector('[role="tablist"]');
+
+  await page.$eval('[role="tablist"]', (tablist) => {
+    if (tablist.children.length > 0) {
+      const firstChild = tablist.children[1];
+      const clickEvent = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+      });
+      firstChild.dispatchEvent(clickEvent);
+    }
+  });
 
   try {
     const data = await getPlaceData(page);
